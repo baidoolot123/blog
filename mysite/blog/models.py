@@ -9,15 +9,16 @@ GENDER_OPTIONS = (
     ('W', 'Woman')
 )
 
+
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.EmailField()
-    address = models.TextField()
-    telephone = models.CharField(max_length=30)
+    # email = models.EmailField()
+    address = models.TextField(blank=True, null=True)
+    telephone = models.CharField(max_length=30, blank=True, null=True)
     birth_year = models.DateField(blank=True, null=True)
-    gender = models.CharField(max_length=1, choices=GENDER_OPTIONS)   
+    gender = models.CharField(max_length=1, choices=GENDER_OPTIONS, blank=True, null=True)   
     avatar = models.ImageField(upload_to='avatars', blank=True, null=True) 
 
     def __str__(self):
@@ -46,3 +47,12 @@ class Books(models.Model):
 
     def __str__(self):
         return f'It is {self.name} written by {self.author}'
+
+
+class Publish(models.Model):
+    topic = models.CharField(max_length = 200)
+    text = models.TextField()
+    created_date = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.topic}'
